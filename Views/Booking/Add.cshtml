@@ -1,0 +1,21 @@
+@model BookingMachine.ViewModels.BookingViewModel
+
+@{
+    ViewBag.Title = "Add";
+}
+
+<form asp-controller="Booking" asp-action="Book" method="post">
+    <div>
+        <label asp-for="AmountOfPlaces"></label>
+        <div>
+            <input asp-for="AmountOfPlaces" type="number"/>
+            <span asp-validation-for="AmountOfPlaces"></span>
+        </div>
+        <select asp-for="Room"
+                asp-items="Html.GetEnumSelectList<Room>()">
+        </select>
+    </div>
+    <div>
+        <input type="submit" value="Submit"/>
+    </div>
+</form>

@@ -1,0 +1,18 @@
+@model IEnumerable<Computer>
+
+@foreach (var computer in Model)
+{
+	<div>
+		@computer.Id – @computer.Room – 
+		@if (computer.IsBooked)
+		{
+			@computer.BookedBy.UserName @Html.Raw("–") 
+			<a asp-controller="Booking" asp-action="DeleteForUser" 
+			   asp-route-userId="@computer.BookedBy.Id" asp-route-compId="@computer.Id">Delete</a>
+		}
+		else
+		{
+			@Html.Raw("free")
+		}
+	</div>
+}

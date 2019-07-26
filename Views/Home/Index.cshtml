@@ -1,0 +1,15 @@
+﻿@model BookingMachine.ViewModels.HomeViewModel
+@{
+    ViewBag.Title = "Home";
+}
+
+<h1>SALAM MELEYKIM!</h1>
+<div>
+    <h2>Number of free commons: </h2>
+    @Model.CommonPlaces
+    <h2>Number of free VIPs: </h2>
+    @Model.VipPlaces
+</div>
+
+@await Html.PartialAsync("_Booked")
+@await Html.PartialAsync("_Queue")

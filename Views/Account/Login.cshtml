@@ -1,0 +1,35 @@
+@model BookingMachine.ViewModels.LoginViewModel
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Log in</h2>
+<form asp-controller="Account" asp-action="Login" method="post">
+    <input type="hidden" asp-for="ReturnUrl" />
+    <div asp-validation-summary="All"></div>
+    
+    <div>
+        <label asp-for="UserName"></label>
+        <div>
+            <input asp-for="UserName" />
+            <span asp-validation-for="UserName"></span>
+        </div>
+    </div>
+    <div>
+        <label asp-for="Password"></label>
+        <div>
+            <input asp-for="Password" />
+            <span asp-validation-for="Password"></span>
+        </div>
+    </div>
+    <div>
+        <div>
+            <input type="submit" value="Log in"/>
+        </div>
+    </div>
+</form>
+
+<div>
+    <span>Don't  have an account yet?</span>
+    <a asp-controller="Account" asp-action="Register">Create one!</a>
+</div>

@@ -1,0 +1,8 @@
+@model IEnumerable<BookingMachine.Auth.ApplicationUser>
+
+@foreach (var user in Model)
+{
+	<div>
+		@user.Id – @user.UserName
+	</div>
+}

@@ -1,0 +1,38 @@
+@using System.Security.Claims
+@using BookingMachine.Auth
+@using BookingMachine.Interfaces
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject IHttpContextAccessor HttpContextAccessor
+@inject AppDbContext AppDbContext
+@inject IComputerRepository ComputerRepository
+
+@if (SignInManager.IsSignedIn(User) && AppDbContext.Computers.Any(c => c.BookedBy.Id == HttpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value && c.IsBooked))
+{
+    <div>
+        <ul>
+            @foreach (var computer in ComputerRepository.GetBooksForUser(HttpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            {
+                <li>
+                    @computer.Id – @computer.Room
+                    <a asp-controller="Booking" asp-action="Delete" asp-route-compId="@computer.Id">Remove</a>
+                </li>
+            }
+        </ul>
+        <h4>You booking expires at
+            @ComputerRepository.GetExpireDateTimeForUser(HttpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value)
+        </h4>
+    </div>
+    <div>
+        <a asp-controller="Booking" asp-action="Add">Add</a>
+        <br/>
+        <a asp-controller="Booking" asp-action="Withdraw">Withdraw</a>
+    </div>
+}
+else
+{
+    <div>
+        <a asp-controller="Booking" asp-action="Book">Book</a>
+    </div>
+}

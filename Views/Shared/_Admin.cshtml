@@ -1,0 +1,7 @@
+@if (User.IsInRole("Admin"))
+{
+	<div>
+		<a asp-controller="Admin" asp-action="Computers">Computers</a>
+		<a asp-controller="Admin" asp-action="Users">Users</a>
+	</div>
+}

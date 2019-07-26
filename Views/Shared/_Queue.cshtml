@@ -1,0 +1,30 @@
+@using System.Security.Claims
+@using BookingMachine.Auth
+@using BookingMachine.Interfaces
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Identity
+@inject IQueueRepository QueueRepository
+@inject IHttpContextAccessor HttpContextAccessor
+@inject AppDbContext AppDbContext
+@inject UserManager<ApplicationUser> UserManager
+
+@if (AppDbContext.Queues.Any(q => q.User.Id == HttpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value))
+{
+	<div>
+		Your position in queue is
+		@QueueRepository.GetIndex(await UserManager.FindByIdAsync(HttpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value))
+	</div>
+	<div>
+		List of rooms:
+		<br/>
+		@foreach (var queue in AppDbContext.Queues.Where(q => q.User.Id == HttpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value))
+		{
+			@queue.PreferredRoom
+			<a asp-controller="Booking" asp-action="RemovePlaceFromQueue" asp-route-queueId="@queue.QueueId">Delete</a>
+			<br/>
+		}
+	</div>
+	<div>
+		<a asp-controller="Booking" asp-action="LeaveQueue">Leave queue</a>
+	</div>
+}

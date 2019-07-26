@@ -1,0 +1,11 @@
+@using BookingMachine.Auth
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <p>@User.Identity.Name</p>
+    <form asp-action="Logout" asp-controller="Account" method="post">
+        <input type="submit" value="Logout" />
+    </form>
+}

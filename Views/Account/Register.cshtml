@@ -1,0 +1,34 @@
+@model BookingMachine.ViewModels.RegistrationViewModel
+@{
+    ViewBag.Title = "Register";
+}
+
+<form asp-controller="Account" asp-action="Register" method="post">
+    <h2>Register</h2>
+    <div asp-validation-summary="All"></div>
+    
+    <div>
+        <label asp-for="UserName"></label>
+        <div>
+            <input asp-for="UserName" />
+            <span asp-validation-for="UserName"></span>
+        </div>
+    </div>
+    <div>
+        <label asp-for="Password"></label>
+        <div>
+            <input asp-for="Password" />
+            <span asp-validation-for="Password"></span>
+        </div>
+    </div>
+    <div>
+        <div>
+            <input type="submit" value="Register"/>
+        </div>
+    </div>
+</form>
+
+<div>
+    <span>Have an account already?</span>
+    <a asp-controller="Account" asp-action="Login">Log in</a>
+</div>
